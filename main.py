@@ -10,6 +10,7 @@ dim_list = dim_metrics.dims
 metrics = dim_metrics.metrics
 current_row = 0
 
+filter_options = ('contains','>','<','does not contain')
 my_dir='' # string to hold directory path
 def my_fun():
     my_dir = filedialog.askdirectory() # select directory
@@ -17,11 +18,15 @@ def my_fun():
 
 l1=Label(root, text='Dimensions', font=('Helvetica 15'),
       background="gray74")
-l1.grid(row=current_row,column=0,padx=0)
+l1.grid(row=current_row, column=0, padx=20, sticky='w')
 current_row+=1
 def get_date():
     selected_date = cal1.get()
     print(f"Selected date: {selected_date}")
+
+menu = StringVar()
+menu.set("Choose var")
+
 
 dim_variables = []
 for element in dim_list:
@@ -80,11 +85,15 @@ cal2 = DateEntry(root, date_pattern="yyyy-mm-dd")
 cal2.grid(row=current_row,column=1,padx=0,pady=10,sticky='w')
 current_row += 1
 
-b1=Button(root,text='Select directory',font=22,
+drop = OptionMenu(root, menu, *(dim_list+metrics))
+drop.grid(row=current_row, column=0, padx=20, pady=0, sticky='w')
+current_row += 1
+
+b1=Button(root,text='Select directory', font=22,
     command=lambda:my_fun(),bg='lightgreen')
-b1.grid(row=current_row,column=0,padx=0,pady=20)
-l2=Label(root,text=my_dir,bg='yellow',font=18)
-l2.grid(row=current_row,column=1,padx=2)
+b1.grid(row=current_row, column=0,padx=0,pady=20)
+l2=Label(root,text=my_dir, bg='yellow',font=18)
+l2.grid(row=current_row, column=1,padx=2)
 date_btn = Button(root, text="Click Here To Return a Date ", command=get_date)
 
 print(get_date())
